@@ -21,7 +21,7 @@ exports.signin = (req, res) => {
         // if err or no user
         if (err || !user) {
             return res.status(401).json({
-                error: "User with that email does not exist. Please signin."
+                error: "User with that email does not exist. Please signup."
             });
         }
         // if user is found make sure the email and password match
@@ -47,7 +47,6 @@ exports.signout = (req, res) => {
 };
 
 exports.requireSignin = expressJwt({
-	// if token is valid, express-jwt appends the verified user id in an auth key to the request object
     secret: process.env.JWT_SECRET,
     userProperty: "auth"
 });
