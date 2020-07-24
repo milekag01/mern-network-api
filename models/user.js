@@ -1,16 +1,16 @@
 const mongoose = require("mongoose");
-const uuidv1 = require("uuid/v1");
+const uuidv1 = require("uuidv1");
 const crypto = require("crypto");
 
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        trim: ture,
+        trim: true,
         required: true
     },
     email: {
         type: String,
-        trim: ture,
+        trim: true,
         required: true
     },
     hashed_password: {
@@ -49,6 +49,10 @@ userSchema
 
 // methods
 userSchema.methods = {
+    authenticate: function(plainText) {
+        return this.encryptPassword(plainText) === this.hashed_password;
+    },
+
     encryptPassword: function(password) {
         if (!password) return "";
         try {
