@@ -9,11 +9,16 @@ const {
     addFollowing,
     addFollower,
     removeFollowing,
-    removeFollower
+    removeFollower,
+    findPeople
 } = require("../controllers/user");
 const { requireSignin } = require("../controllers/auth");
 
 const router = express.Router();
+
+// follow unfollow // need to be at top as otherwise, /user/id will capture the request
+router.put("/user/follow", requireSignin, addFollowing, addFollower);
+router.put("/user/unfollow", requireSignin, removeFollowing, removeFollower);
 
 router.get("/users", allUsers);
 router.get("/user/:userId", requireSignin, getUser);
@@ -23,9 +28,8 @@ router.delete("/user/:userId", requireSignin, deleteUser);
 // photo
 router.get("/user/photo/:userId", userPhoto);
 
-// follow unfollow
-router.put("/user/follow", requireSignin, addFollowing, addFollower);
-router.put("/user/unfollow", requireSignin, removeFollowing, removeFollower);
+// who to follow
+router.get("/user/findpeople/:userId", requireSignin, findPeople);
 
 // any route containing :userId, app will first execute userByID()
 router.param("userId", userById);
