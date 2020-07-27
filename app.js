@@ -8,6 +8,7 @@ const expressValidator = require("express-validator");
 const cors = require("cors");
 const fs = require("fs");
 const dotenv = require("dotenv");
+
 dotenv.config();
 
 // db
